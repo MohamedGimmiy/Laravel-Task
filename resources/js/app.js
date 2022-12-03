@@ -44,7 +44,7 @@ const app = new Vue({
     vuetify,
     router: new VueRouter(
         routes // short for `routes: routes`
-        ),
-        components: {  index},
+    ),
+    components: { index },
 });
 
