@@ -17,11 +17,11 @@
               </div>
 
               <!-- Submit button -->
-              <button type="submit"   class="btn btn-primary btn-block mb-4">Login</button>
+              <button type="button" v-on:click="submitForm()"  class="btn btn-primary btn-block mb-4">Login</button>
 
               <!-- Register buttons -->
               <div class="text-center">
-                <p>Not a member? <a href="#!">Register</a></p>
+                <p>Not a member? <button v-on:click="$router.push('/register')">Register</button></p>
               </div>
             </form>
             </div>
@@ -39,19 +39,32 @@ export default {
     },
     methods: {
         submitForm(){
+
+            if(!this.validate()){
+                return;
+            }
             const formData = new FormData();
-            formData.append("name", this.username);
-            formData.append("order", this.password);
-            axios.get('http://localhost:8000/api/login/' + this.username, formData).then(res => {
+            formData.append("username", this.username);
+            formData.append("password", this.password);
+
+            axios.post('http://localhost:8000/api/login/', formData).then(res => {
                 if (res.status == 200) {
-                    this.$router.push('categories');
+                    alert('success')
+                    this.$router.push('home');
                 } else{
                     alert('user or password is not correct!');
                 }
             })
         },
         validate(){
-            return true;
+
+            if(this.username && this.password){
+                return true;
+            }
+            else {
+                alert('please fill all fields');
+                return false;
+            }
         }
     }
 

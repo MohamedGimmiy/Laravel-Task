@@ -13,6 +13,10 @@
                 <input v-model="lastname" name="lastname" type="text" id="lastname" class="form-control" required/>
                 <label class="form-label" for="lastname">Last Name</label>
               </div>
+              <div class="form-outline mb-4">
+                <input v-model="username" name="username" type="text" id="username" class="form-control" required/>
+                <label class="form-label" for="username">User Name</label>
+              </div>
 
               <div class="form-outline mb-4">
                 <input v-model="email" name="email" type="email" id="email" class="form-control"/>
@@ -28,11 +32,11 @@
               </div>
 
               <!-- Submit button -->
-              <button type="submit"  v-on:click="submitForm()" class="btn btn-primary btn-block mb-4">Sign Up</button>
+              <button type="button"  v-on:click="submitForm()" class="btn btn-primary btn-block mb-4">Sign Up</button>
 
               <!-- Register buttons -->
               <div class="text-center">
-                <p>Already a member? <button @click="() => this.$router.push('register')" >Register</button></p>
+                <p>Already a member? <button @click="() => $router.push('Login')" >Login</button></p>
               </div>
             </form>
             </div>
@@ -46,6 +50,7 @@ export default {
         return {
             firstname:  '',
             lastname: '',
+            username: '',
             email: '',
             password: '',
             confirmpassword: '',
@@ -53,7 +58,12 @@ export default {
     },
     methods: {
         submitForm(){
+
+            if(!this.validate()){
+                return;
+            }
             const formData = new FormData();
+            formData.append("username", this.username);
             formData.append("firstname", this.firstname);
             formData.append("lastname", this.lastname);
             formData.append("email", this.email);
@@ -62,12 +72,21 @@ export default {
                 if (res.status == 200) {
                     this.$router.push('home');
                 } else{
-                    alert('Error occured please try again!');
+                    alert('Error occured please try again!', res.error);
                 }
             })
         },
         validate(){
-            return true;
+            if(this.password != this.confirmpassword){
+                alert('password is not confirmed well!');
+                return false;
+            }
+            if(this.username && this.firstname && this.lastname && this.username && this.password){
+                return true;
+            }
+            else {
+                alert('please fill all fields');
+            }
         }
     }
 
