@@ -1,5 +1,5 @@
 <template>
-    <div>
+      <div>
         <form enctype="multipart/form-data" style="background: white; padding: 40px; border-radius: 20px;">
               <!-- Email input -->
               <div class="form-outline mb-4">
@@ -20,6 +20,7 @@
 
 <script>
 export default {
+    props: ['user'],
     data: function(){
         return{
             file: '',
@@ -38,10 +39,10 @@ export default {
             formData.append('file', this.file);
             formData.append('type', this.file.type);
             formData.append('size', this.file.size);
-            formData.append('user_id', parseInt(localStorage.getItem('user_id')));
+            formData.append('user_id', parseInt(this.user.id));
             let settings = { headers: { 'content-type': 'multipart/form-data' } }
 
-                axios.post('http://localhost:8000/api/upload', formData, settings).then(res=>{
+                axios.post('http://localhost:8000/api/user', formData, settings).then(res=>{
                     if(res.status == 200){
                         console.log(res)
                         alert('file uploaded successfully!' + JSON.stringify(res.data))
@@ -52,7 +53,8 @@ export default {
                 });
         },
         getinfo(){
-            axios.get('http://localhost:8000/api/info').then(res=>{
+            axios.get('http://localhost:8000/api/info').then(
+                res=>{
                     if(res.status == 200){
                         console.log(res)
                         this.info = res.data;

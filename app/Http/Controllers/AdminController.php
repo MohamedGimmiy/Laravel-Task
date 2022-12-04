@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\File;
 use App\User;
+use Illuminate\Support\Facades\File as fs;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -83,14 +86,19 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $details = $request->validate([
             'email' => 'required',
             'firstname' => 'required',
             'lastname' => 'required',
             'username' => 'required'
         ]);
-
         $user = User::findOrFail($id);
+
+        if($request->has('password') && $request->password != ''){
+            $details['password'] = Hash::make($request->password);
+        }
+
         $user->update($details);
 
         return response()->json([
@@ -101,6 +109,8 @@ class AdminController extends Controller
 
     // uploaded file, user id
     public function uploadToUser(Request $request){
+
+
         $request->validate([
             'file' => 'required',
             'user_id' => 'required'
@@ -141,6 +151,14 @@ class AdminController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
+
+        // does not been deleted
+        foreach($user->files() as $file){
+            fs::delete(public_path('files/'. $user->id). '/'. $file->name);
+        }
+
+        $user->files()->delete();
+
         $user->delete();
 
         return response()->json([

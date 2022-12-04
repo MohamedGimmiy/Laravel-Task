@@ -40,11 +40,13 @@ Route::delete('/file/{id}', [FileController::class, 'destroy']);
 Route::get('/files', [FileController::class, 'index']);
 
 //Admin routes
-
-// for users
+//1.
+Route::post('/user/create', [AdminController::class, 'store']);
+Route::put('/user/update/{id}', [AdminController::class, 'update']);
 Route::delete('/user/{id}', [AdminController::class, 'destroy']);
-Route::put('/user/{id}', [AdminController::class, 'update']);
-Route::post('/user/{id}', [AdminController::class, 'store']);
+
+//2.
+Route::post('/user',[AdminController::class, 'uploadToUser']);
 
 
 

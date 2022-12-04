@@ -16,8 +16,10 @@ class CreateFilesTable extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->bigInteger('user_id');
+            $table->string('type')->nullable();
+            $table->string('size')->nullable();
             $table->timestamps();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

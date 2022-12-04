@@ -10,7 +10,7 @@
             </div>
 
         </div>
-        <div class="container" v-for="(userObj, index) in info" :key="userObj.user.id">
+        <div class="container" v-for="(userObj, index) in filtered" :key="userObj.user.id">
 
             <div class="row">
                 <div class="col-6 offset-3">
@@ -35,7 +35,7 @@
                                 <td>
                                     <button class="ml-4 btn btn-primary block" @click="updateUser(userObj.user)">Edit</button>
                                     <button class="btn btn-danger block" @click="deleteUser(userObj.user)">Delete</button>
-                                    <button class="btn btn-info" v-on:click="uploadFile">Upload File</button>
+                                    <button class="btn btn-info" @click="uploadFile(userObj.user)">Upload File</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -84,22 +84,22 @@ export default {
         getinfo() {
             axios.get('http://localhost:8000/api/info').then(res => {
                 if (res.status == 200) {
-                    console.log(res.data)
                     this.info = res.data.info;
+                    this.filtered = this.info;
                 } else {
                     console.log(res);
                 }
             });
         },
         deleteFile(file) {
-            // ajax call
+            // Ajax call
             axios.delete('http://localhost:8000/api/file/' + file.id).then(res => {
                 alert('file deleted successfully!');
                 this.getinfo();
             });
         },
         uploadFile(user){
-            this.router.push('/')
+            this.$router.push({name: 'uploadUserFile', params: {user}})
         },
         deleteUser(user){
             axios.delete('http://localhost:8000/api/user/' + user.id).then(res => {
@@ -110,17 +110,16 @@ export default {
             });
         },
         updateUser(user){
-
+            this.$router.push({name: 'editUser', params: {user}})
         },
-        createUser(user){
-
+        createUser(){
+            this.$router.push('/admin/user/create');
         },
         filterUsers(event) {
             // filter by name
-            this.filtered = this.info.filter(user => {
-                return (user.name.indexOf(event.target.value) == -1 ? false : true)
+            this.filtered = this.info.filter(obj => {
+                return (obj.user.username.indexOf(event.target.value) == -1 ? false : true)
             });
-
         }
     },
     mounted() {
