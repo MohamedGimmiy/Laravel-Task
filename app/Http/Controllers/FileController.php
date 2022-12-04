@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\File;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Database\Query\Builder;
 
 class FileController extends Controller
 {
@@ -107,5 +109,22 @@ class FileController extends Controller
     public function destroy(File $file)
     {
         //
+    }
+
+
+    public function info(){
+
+        $users = User::with('files')->get(['id','username','email']);
+
+        $allInfo = [];
+
+        foreach($users as $user){
+            $userInfo = [
+                'user' => $user
+            ];
+            $allInfo [] = $userInfo;
+        }
+
+        return response()->json(['info' => $allInfo]);
     }
 }

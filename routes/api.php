@@ -23,6 +23,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Authentication
 Route::post('/login', [AuthController::class, 'postLogin']);
 
+
 Route::post('/register', [AuthController::class, 'postRegister']);
 
+
 Route::post('/upload', [FileController::class, 'store']);
+
+// retrieve all users with files uploaded
+Route::get('/info', [FileController::class, 'info']);
+

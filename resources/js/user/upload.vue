@@ -1,4 +1,5 @@
 <template>
+    <div>
     <form enctype="multipart/form-data" style="background: white; padding: 40px; border-radius: 20px;">
           <!-- Email input -->
           <div class="form-outline mb-4">
@@ -8,13 +9,25 @@
           <button type="button" v-on:click="submitForm"  class="btn btn-primary btn-block mb-4">Upload</button>
 
     </form>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <!-- retrive all files as json user->files array -->
+                <h4>{{JSON.stringify(this.info)}}</h4>
+
+            </div>
+        </div>
+    </div>
+
+    </div>
 </template>
 
 <script>
 export default {
 data: function(){
     return{
-        file: ''
+        file: '',
+        info: ''
     }
 },
 methods: {
@@ -38,7 +51,22 @@ methods: {
                     console.log(res);
                 }
             });
+    },
+    getInfo(){
+        axios.get('http://localhost:8000/api/info').then(res => {
+            if(res.status == 200){
+                this.info = res.data.info
+                console.log(JSON.stringify(res.data.info))
+/*                 document.getElementById('info').innerHTML = this.info; */
+            }
+            else {
+                alert('faild getting info');
+            }
+        })
     }
+},
+mounted(){
+    this.getInfo();
 }
 }
 </script>
