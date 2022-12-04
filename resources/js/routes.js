@@ -3,6 +3,7 @@
 import Login from '../js/auth/Login.vue';
 import Register from '../js/auth/Register.vue';
 import Upload from '../js/user/upload.vue';
+import Files from '../js/user/files.vue';
 import Home from '../js/user/home.vue';
 
 
@@ -32,7 +33,13 @@ export default {
             path: '/',
             name: 'home',
             component: Home
-        }
+        },
+        {
+            path: '/resources',
+            name: 'resources',
+            component: Files
+        },
+
 
     ]
 };

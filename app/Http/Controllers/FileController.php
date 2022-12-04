@@ -111,9 +111,13 @@ class FileController extends Controller
      * @param  \App\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function destroy(File $file)
+    public function destroy($id)
     {
-        //
+        $file = File::findOrFail($id);
+        $file->delete();
+        return response()->json([
+            'status' => 'success'
+        ]);
     }
 
 

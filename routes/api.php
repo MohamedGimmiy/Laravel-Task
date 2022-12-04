@@ -32,5 +32,11 @@ Route::post('/upload', [FileController::class, 'store']);
 // retrieve all users with files uploaded
 Route::get('/info', [FileController::class, 'info']);
 
+// delete a file
+Route::delete('/file/{id}', [FileController::class, 'destroy']);
+
+// show all files
+Route::get('/files', [FileController::class, 'index']);
+
 
 
