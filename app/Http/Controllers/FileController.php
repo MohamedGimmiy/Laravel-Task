@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\File;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Database\Query\Builder;
 
 class FileController extends Controller
 {
@@ -16,7 +15,11 @@ class FileController extends Controller
      */
     public function index()
     {
-        //
+        $files = File::all();
+        return response()->json([
+            'files' => $files,
+            'status' => 'success'
+        ]);
     }
 
     /**
@@ -48,11 +51,20 @@ class FileController extends Controller
 
                 $request->file->move(public_path('files/'. $request->user_id. '/'), $name);
 
+                $data = new File();
+                $data->user_id =  $request->user_id;
+                $data->name = $name;
+                $data->type = $request->type;
+                $data->size = (int) $request->size;
+                $data->save();
 
-                File::create([
+
+/*                 File::create([
                     'user_id' => $request->user_id,
-                    'name' => $name
-                ]);
+                    'name' => $name,
+                    'type' => $request->type,
+                    'size' => $request->size
+                ]); */
 
 
                 return response()->json([
@@ -106,15 +118,20 @@ class FileController extends Controller
      * @param  \App\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function destroy(File $file)
+    public function destroy($id)
     {
-        //
+        $file = File::findOrFail($id);
+        $file->delete();
+
+        return response()->json([
+            'status' => 'success',
+        ]);
     }
 
 
     public function info(){
 
-        $users = User::with('files')->get(['id','username','email']);
+        $users = User::with('files');
 
         $allInfo = [];
 

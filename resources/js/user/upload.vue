@@ -40,13 +40,15 @@ methods: {
         e.preventDefault();
         const formData = new FormData();
         formData.append('file', this.file);
-        formData.append('user_id', parseInt(localStorage.getItem('user_id')));
+        formData.append('size', this.file.size);
+        formData.append('type', this.file.type);
+        formData.append('user_id', localStorage.getItem('user_id'));
         let settings = { headers: { 'content-type': 'multipart/form-data' } }
 
             axios.post('http://localhost:8000/api/upload', formData, settings).then(res=>{
                 if(res.status == 200){
                     console.log(res)
-                    alert('file uploaded successfully!' + JSON.stringify(res.data))
+                    console.log('file uploaded successfully!' + JSON.stringify(res))
                 }else{
                     console.log(res);
                 }

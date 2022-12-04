@@ -48,7 +48,7 @@ export default {
             formData.append("password", this.password);
 
             axios.post('http://localhost:8000/api/login/', formData).then(res => {
-                if (res.status == 200) {
+                if (res.status == 200 && res.data.status != 'faild') {
                     alert('success'+ JSON.stringify(res.data))
                     localStorage.setItem('user_id',res.data.user_id);
                     this.$router.push('home');

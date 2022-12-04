@@ -15,7 +15,13 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        $user = User::where('username', $details['username'])->where('password', $details['password'])->firstOrFail();
+        $user = User::where('username', $details['username'])->firstOrFail();
+
+        if(!Hash::check($details['password'], $user->password)){
+            return response()->json([
+                'status' => 'faild'
+            ]);
+        }
 
         if($user){
             Auth::loginUsingId($user->id);
