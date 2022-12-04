@@ -36,14 +36,15 @@ class FileController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'files' => 'required',
+            'file' => 'required',
             'user_id' => 'required'
         ]);
 
-        if($request->has('files')){
-            foreach($request->file('files') as $file){
-                $name = time(). '.' . $file->extension();
-                $file->move(public_path($request->user_id. '.' .'files/'), $name);
+
+        if($request->has('file')){
+                $name = time(). '.' . $request->file->getClientOriginalExtension();
+
+                $request->file->move(public_path('files/'. $request->user_id. '/'), $name);
 
 
                 File::create([
@@ -51,15 +52,16 @@ class FileController extends Controller
                     'name' => $name
                 ]);
 
+
+                return response()->json([
+                    'status' => 'success'
+                ]);
             }
-        }
 
 
-
-
-
-
-
+        return response()->json([
+            'status' => 'faild'
+        ]);
     }
 
     /**

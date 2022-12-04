@@ -1,11 +1,11 @@
 <template>
-    <form style="background: white; padding: 40px; border-radius: 20px;">
+    <form enctype="multipart/form-data" style="background: white; padding: 40px; border-radius: 20px;">
           <!-- Email input -->
           <div class="form-outline mb-4">
-            <input multiple accept=".zip" v-on:change="fileUpload($event)" name="files[]" type="file" id="files" class="form-control" required/>
+            <input accept=".zip" @change="fileUpload" name="file" type="file" id="file" class="form-control" required/>
             <label class="form-label" for="Upload File">Upload A Zip File</label>
           </div>
-          <button type="button" v-on:click="submitForm()"  class="btn btn-primary btn-block mb-4">Upload</button>
+          <button type="button" v-on:click="submitForm"  class="btn btn-primary btn-block mb-4">Upload</button>
 
     </form>
 </template>
@@ -14,32 +14,30 @@
 export default {
 data: function(){
     return{
-        files: []
+        file: ''
     }
 },
 methods: {
     fileUpload(ev){
-        let f= ev.target.files || e.dataTransfer.files;
-        if(!f.length)
-            return;
-
-        this.files += f;
+        console.log(ev.target.files[0])
+        this.file = ev.target.files[0];
     },
-    submitForm(){
+    submitForm(e){
         // ajax call
+        e.preventDefault();
         const formData = new FormData();
-        formData.append('files',this.files);
-        formData.append('user_id', localStorage.getItem('user_id'))
-        if(this.files.length ){
-            axios.post('http://localhost:8000/api/upload', formData).then(res=>{
-                if(res.status == 200){
+        formData.append('file', this.file);
+        formData.append('user_id', parseInt(localStorage.getItem('user_id')));
+        let settings = { headers: { 'content-type': 'multipart/form-data' } }
 
-                    alert('file uploaded successfully!')
+            axios.post('http://localhost:8000/api/upload', formData, settings).then(res=>{
+                if(res.status == 200){
+                    console.log(res)
+                    alert('file uploaded successfully!' + JSON.stringify(res.data))
                 }else{
                     console.log(res);
                 }
             });
-        }
     }
 }
 }

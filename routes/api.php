@@ -25,4 +25,4 @@ Route::post('/login', [AuthController::class, 'postLogin']);
 
 Route::post('/register', [AuthController::class, 'postRegister']);
 
-Route::post('/upload', [FileController::class, 'store'])->middleware('auth');
+Route::post('/upload', [FileController::class, 'store']);

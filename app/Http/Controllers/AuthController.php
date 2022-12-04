@@ -6,7 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use AuthenticatesUsers;
+
 class AuthController extends Controller
 {
     public function postLogin(Request $request){
@@ -30,10 +30,7 @@ class AuthController extends Controller
         ]);
 
     }
-    public function username()
-    {
-        return 'username';
-    }
+
     public function postRegister(Request $request){
 
         $details = $request->validate([
