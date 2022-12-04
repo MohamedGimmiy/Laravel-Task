@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/login', [AuthController::class, 'postLogin']);
 
 Route::post('/register', [AuthController::class, 'postRegister']);
+
+Route::post('/upload', [FileController::class, 'store'])->middleware('auth');

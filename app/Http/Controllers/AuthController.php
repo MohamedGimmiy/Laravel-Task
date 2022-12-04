@@ -6,7 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
+use AuthenticatesUsers;
 class AuthController extends Controller
 {
     public function postLogin(Request $request){
@@ -15,9 +15,13 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        if(Auth::attempt($details)){
+        $user = User::where('username', $details['username'])->where('password', $details['password'])->firstOrFail();
+
+        if($user){
+            Auth::loginUsingId($user->id);
             return response()->json([
-                'status' => 'success'
+                'status' => 'success',
+                'user_id' => Auth::id()
             ]);
         }
 
@@ -26,7 +30,10 @@ class AuthController extends Controller
         ]);
 
     }
-
+    public function username()
+    {
+        return 'username';
+    }
     public function postRegister(Request $request){
 
         $details = $request->validate([
@@ -46,7 +53,8 @@ class AuthController extends Controller
 
         Auth::login($user);
         return response()->json([
-            'status' => 'success'
+            'status' => 'success',
+            'user_id' => auth()->user()->id
         ]);
     }
 }

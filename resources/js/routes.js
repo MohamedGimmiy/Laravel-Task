@@ -9,7 +9,7 @@ import Home from '../js/user/home.vue';
 export default {
     mode: 'history',
     routes: [
-         {
+        {
             path: '/login',
             name: 'login',
             component: Login
@@ -26,6 +26,10 @@ export default {
         },
         {
             path: '/home',
+            name: 'home',
+            component: Home
+        }, {
+            path: '/',
             name: 'home',
             component: Home
         }

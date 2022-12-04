@@ -49,7 +49,8 @@ export default {
 
             axios.post('http://localhost:8000/api/login/', formData).then(res => {
                 if (res.status == 200) {
-                    alert('success')
+                    alert('success'+ JSON.stringify(res.data))
+                    localStorage.setItem('user_id',res.data.user_id);
                     this.$router.push('home');
                 } else{
                     alert('user or password is not correct!');

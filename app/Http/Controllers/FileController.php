@@ -35,7 +35,31 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'files' => 'required',
+            'user_id' => 'required'
+        ]);
+
+        if($request->has('files')){
+            foreach($request->file('files') as $file){
+                $name = time(). '.' . $file->extension();
+                $file->move(public_path($request->user_id. '.' .'files/'), $name);
+
+
+                File::create([
+                    'user_id' => $request->user_id,
+                    'name' => $name
+                ]);
+
+            }
+        }
+
+
+
+
+
+
+
     }
 
     /**
