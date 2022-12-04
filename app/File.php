@@ -17,8 +17,9 @@ class File extends Model
 
 
 
+// it takes more than 2 hours to solve ??!!
 
-    public static function boot(){
+    public static function booted(){
         static::deleted(function($file){
             fs::delete(public_path('files/'. $file->user->id). '/'. $file->name);
         });

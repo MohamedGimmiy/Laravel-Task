@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\File;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Database\Query\Builder;
 
 class FileController extends Controller
 {
@@ -131,7 +132,7 @@ class FileController extends Controller
 
     public function info(){
 
-        $users = User::with('files');
+        $users = User::with('files')->get(['id','username','email']);
 
         $allInfo = [];
 
