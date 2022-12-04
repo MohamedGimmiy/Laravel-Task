@@ -16,7 +16,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(file, index) in files" :key="file.id">
+                        <tr v-for="(file, index) in filtered" :key="file.id">
                             <th scope="row">{{(index+1)}}</th>
                             <td>{{ file.name }}</td>
                             <td>{{ file.type }}</td>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+
 export default {
     data() {
         return {
@@ -44,6 +45,7 @@ export default {
         showFiles(){
             axios.get('http://localhost:8000/api/files').then(res => {
                 this.files = res.data.files;
+                this.filtered = this.files;
             });
         },
         deleteFile(file) {
@@ -54,7 +56,14 @@ export default {
             });
         },
         filterFiles(event) {
-
+            // filter by name
+            this.filtered = this.files.filter(file => {
+                return file.name.indexOf(event.target.value) == -1? false: true;
+            });
+/*             // filter by type
+            this.filtered = this.files.filter(file => {
+                return file.type.indexOf(event.target.value) == -1? false: true;
+            }); */
         }
     },
     mounted(){

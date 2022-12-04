@@ -11,7 +11,7 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <h4>{{JSON.stringify(this.info)}}</h4>
+                    <h4>{{JSON.stringify(info)}}</h4>
                 </div>
             </div>
         </div>
@@ -45,6 +45,7 @@ methods: {
                 if(res.status == 200){
                     console.log(res)
                     alert('file uploaded successfully!' + JSON.stringify(res.data))
+                    this.getinfo();
                 }else{
                     console.log(res);
                 }
