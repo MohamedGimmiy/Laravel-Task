@@ -18,8 +18,7 @@ class FileController extends Controller
     {
         $files = File::all();
         return response()->json([
-            'files' => $files,
-            'status' => 'success'
+            'files' => $files
         ]);
     }
 
@@ -52,20 +51,13 @@ class FileController extends Controller
 
                 $request->file->move(public_path('files/'. $request->user_id. '/'), $name);
 
-                $data = new File();
-                $data->user_id =  $request->user_id;
-                $data->name = $name;
-                $data->type = $request->type;
-                $data->size = (int) $request->size;
-                $data->save();
 
-
-/*                 File::create([
+                File::create([
                     'user_id' => $request->user_id,
                     'name' => $name,
                     'type' => $request->type,
                     'size' => $request->size
-                ]); */
+                ]);
 
 
                 return response()->json([
@@ -119,14 +111,9 @@ class FileController extends Controller
      * @param  \App\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(File $file)
     {
-        $file = File::findOrFail($id);
-        $file->delete();
-
-        return response()->json([
-            'status' => 'success',
-        ]);
+        //
     }
 
 

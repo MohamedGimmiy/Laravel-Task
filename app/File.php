@@ -4,7 +4,6 @@ namespace App;
 use Illuminate\Support\Facades\File as fs;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\File as FacadesFile;
 
 class File extends Model
 {

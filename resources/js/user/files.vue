@@ -39,28 +39,13 @@ export default {
         }
     },
     methods: {
-        showFiles(){
-        axios.get('http://localhost:8000/api/files').then(res => {
-            if(res.status == 200){
-                this.files = res.data.files
-                console.log(JSON.stringify(res.data.files))
-            }
-            else {
-                alert('faild getting info');
-            }
-        })
-    },
         deleteFile(id) {
             // ajax call
-            axios.delete('http://localhost:8000/api/file' + id).then(res => {
-                if(res.status == 200){
-                    console.log('file deleted' + res.data.status);
-                    alert('file deleted'+ res.data.status)
-                }
-            });
         },
-        filterFiles(event) {
-                event.preventDefault()
+        filterFiles(event){
+            if (event) {
+      event.preventDefault()
+    }
         }
     }
 }
