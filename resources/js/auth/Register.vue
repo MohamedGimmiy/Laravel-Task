@@ -70,6 +70,7 @@ export default {
             formData.append("password", this.password);
             axios.post('http://localhost:8000/api/register/', formData).then(res => {
                 if (res.status == 200) {
+                    localStorage.setItem('user_id', res.data.user_id)
                     this.$router.push('home');
                 } else{
                     alert('Error occured please try again!', res.error);
