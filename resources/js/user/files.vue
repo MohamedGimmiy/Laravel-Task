@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div>
-            <input class="form form-control" type="text" @change="filterFiles" placeholder="Filter files...">
+            <input class="form form-control" type="text" v-on:change="filterFiles" placeholder="Filter files...">
         </div>
         <div class="row">
             <div class="col">
@@ -58,12 +58,9 @@ export default {
         filterFiles(event) {
             // filter by name
             this.filtered = this.files.filter(file => {
-                return file.name.indexOf(event.target.value) == -1? false: true;
+                return (file.name.indexOf(event.target.value) == -1? false: true)
             });
-/*             // filter by type
-            this.filtered = this.files.filter(file => {
-                return file.type.indexOf(event.target.value) == -1? false: true;
-            }); */
+
         }
     },
     mounted(){

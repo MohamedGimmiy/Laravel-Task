@@ -7,6 +7,9 @@ import Files from '../js/user/files.vue';
 import Home from '../js/user/home.vue';
 
 
+import AdminUsers from '../js/admin/userDetails.vue';
+
+
 export default {
     mode: 'history',
     routes: [
@@ -38,6 +41,11 @@ export default {
             path: '/resources',
             name: 'resources',
             component: Files
+        },
+        {
+            path: '/admin/users',
+            name: 'adminUsers',
+            component: AdminUsers
         },
 
 

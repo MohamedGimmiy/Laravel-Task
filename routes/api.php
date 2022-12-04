@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FileController;
 use Illuminate\Http\Request;
@@ -37,6 +38,15 @@ Route::delete('/file/{id}', [FileController::class, 'destroy']);
 
 // show all files
 Route::get('/files', [FileController::class, 'index']);
+
+//Admin routes
+
+// for users
+Route::delete('/user/{id}', [AdminController::class, 'destroy']);
+Route::put('/user/{id}', [AdminController::class, 'update']);
+Route::post('/user/{id}', [AdminController::class, 'store']);
+
+
 
 
 

@@ -123,7 +123,7 @@ class FileController extends Controller
 
     public function info(){
 
-        $users = User::with('files')->get(['id','username','email']);
+        $users = User::with('files')->get(['id','username','email', 'firstname', 'lastname']);
 
         $allInfo = [];
 
