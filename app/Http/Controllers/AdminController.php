@@ -152,10 +152,11 @@ class AdminController extends Controller
     {
         $user = User::findOrFail($id);
 
-        // does not been deleted
-        foreach($user->files as $file){
+        // delete each file
+        /* foreach($user->files as $file){
             fs::delete(public_path('files/'. $user->id). '/'. $file->name);
-        }
+        } */
+        fs::deleteDirectory(public_path('files/'. $user->id));
 
         $user->files()->delete();
 
