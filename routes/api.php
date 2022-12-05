@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\GeneralPurposeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,8 @@ Route::delete('/file/{id}', [FileController::class, 'destroy']);
 
 // show all files
 Route::get('/files', [FileController::class, 'index']);
+
+Route::post('/process', [GeneralPurposeController::class, 'convert']);
 
 //Admin routes
 //1.

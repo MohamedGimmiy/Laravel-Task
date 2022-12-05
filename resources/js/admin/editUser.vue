@@ -32,7 +32,7 @@
               </div>
 
               <!-- Submit button -->
-              <button type="button"  v-on:click="submitForm()" class="btn btn-success btn-block mb-4">Create</button>
+              <button type="button"  v-on:click="submitForm()" class="btn btn-info btn-block mb-4">Update</button>
 
             </form>
             </div>

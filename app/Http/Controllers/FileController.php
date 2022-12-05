@@ -41,7 +41,7 @@ class FileController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'file' => 'required',
+            'file' => 'required|file|mimes:zip',
             'user_id' => 'required'
         ]);
 

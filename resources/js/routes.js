@@ -5,7 +5,7 @@ import Register from '../js/auth/Register.vue';
 import Upload from '../js/user/upload.vue';
 import Files from '../js/user/files.vue';
 import Home from '../js/user/home.vue';
-
+import  Processing  from '../js/user/processing.vue'
 //Admin
 //1. show all users with files related
 import AdminUsers from '../js/admin/userDetails.vue';
@@ -52,6 +52,11 @@ export default {
             path: '/resources',
             name: 'resources',
             component: Files
+        },
+        {
+            path: '/processing',
+            name: 'processing',
+            component: Processing
         },
         {
             path: '/admin/users',
